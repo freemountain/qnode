@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/"/>
+    <qresource prefix="/libqnode">
+        <file>js/processWrapper.js</file>
+        <file>js/prelude.js</file>
+        <file>js/moduleHelper.js</file>
+        <file>js/timersWrapper.js</file>
+    </qresource>
+</RCC>
