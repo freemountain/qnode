@@ -6,8 +6,8 @@
 #include <QJSEngine>
 #include <QList>
 
-#include "modules/moduleprovider.h"
-#include "src/nodeeventloop.h"
+#include "src/moduleprovider.h"
+#include "src/engine/nodeeventloop.h"
 
 class ModuleLoader : public QObject
 {

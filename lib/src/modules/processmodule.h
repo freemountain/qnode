@@ -6,28 +6,16 @@
 #include <QJSEngine>
 #include <QJSValueList>
 
+#include <src/modules/basemodule.h>
+#include "src/engine/enginecontext.h"
 
-#include <src/nodeeventloop.h>
-#include <src/nodemodule.h>
-
-class ProcessModule: public QObject, public NodeModule {
+class ProcessModule: public BaseModule {
     Q_OBJECT
-    Q_INTERFACES(NodeModule)
 public:
-    explicit ProcessModule(QJSEngine *engine);
+    explicit ProcessModule(EngineContext *ctx);
 
     Q_INVOKABLE void nextTick(QJSValue callback, QJSValue args);
     Q_INVOKABLE void send(QJSValue msg);
-
-    QJSValue getJSInstance();
-    bool isBusy();
-
-signals:
-    void dispatch(QJSValue target, QJSValueList args);
-    void ipcMessage(QJSValue msg);
-
-private:
-    QJSEngine *engine;
 };
 
 #endif // PROCESSMODULE_H

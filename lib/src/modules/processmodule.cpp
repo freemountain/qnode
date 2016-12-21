@@ -1,14 +1,10 @@
 #include "processmodule.h"
 
-#include <QDebug>
-#include <QJSValueIterator>
-
-#include "src/utils.h"
 #include "src/jsvalueutils.h"
 
-ProcessModule::ProcessModule(QJSEngine *engine) : QObject(engine)
+ProcessModule::ProcessModule(EngineContext *ctx) : BaseModule(ctx)
 {
-    this->engine = engine;
+    this->jsInstance = this->ctx->wrapModule(this, ":/libqnode/js/processWrapper.js");
 }
 
 void ProcessModule::nextTick(QJSValue callback, QJSValue args) {
@@ -19,13 +15,4 @@ void ProcessModule::nextTick(QJSValue callback, QJSValue args) {
 
 void ProcessModule::send(QJSValue msg) {
     emit ipcMessage(msg);
-}
-
-QJSValue ProcessModule::getJSInstance() {
-    QString wrapperSrc = Utils::readFile(":/libqnode/js/processWrapper.js");
-    return JSValueUtils::wrapModule2(engine, engine->newQObject(this), wrapperSrc);
-}
-
-bool ProcessModule::isBusy() {
-    return false;
 }

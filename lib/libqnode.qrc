@@ -5,5 +5,8 @@
         <file>js/prelude.js</file>
         <file>js/moduleHelper.js</file>
         <file>js/timersWrapper.js</file>
+        <file>js/consoleWrapper.js</file>
+        <file>js/utilWrapper.js</file>
+        <file>js/assertModule.js</file>
     </qresource>
 </RCC>

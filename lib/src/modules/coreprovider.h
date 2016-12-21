@@ -3,18 +3,20 @@
 
 #include <QObject>
 
-#include "moduleprovider.h"
+#include "src/moduleprovider.h"
+#include "src/engine/enginecontext.h"
 
 class CoreProvider : public QObject, public ModuleProvider
 {
     Q_OBJECT
 
 public:
-    explicit CoreProvider(QJSEngine* engine);
+    explicit CoreProvider(EngineContext* ctx);
     NodeModule* module(QString module);
 
 private:
-    QJSEngine* engine;
+    EngineContext* ctx;
+
 };
 
 #endif // COREPROVIDER_H

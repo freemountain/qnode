@@ -16,7 +16,7 @@ class NodeModule {
     //signals:
         virtual void dispatch(QJSValue target, QJSValueList args) =0;
         virtual void ipcMessage(QJSValue msg) =0;
-
+        virtual void stdOutMessage(QString msg) =0;
 };
 
 Q_DECLARE_INTERFACE(NodeModule, "NodeModule")

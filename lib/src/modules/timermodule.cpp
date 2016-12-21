@@ -5,9 +5,9 @@
 #include "src/utils.h"
 #include "src/jsvalueutils.h"
 
-TimerModule::TimerModule(QJSEngine *engine) : QObject(engine)
+TimerModule::TimerModule(EngineContext *ctx) : BaseModule(ctx)
 {
-    this->engine = engine;
+    this->jsInstance = this->ctx->wrapModule(this, ":/libqnode/js/timersWrapper.js");
     this->nextID = 0;
 }
 
@@ -59,11 +59,6 @@ void TimerModule::clear(int id) {
     this->timers.remove(id);
     timer->stop();
     delete timer;
-}
-
-QJSValue TimerModule::getJSInstance() {
-    QString wrapperSrc = Utils::readFile(":/libqnode/js/timersWrapper.js");
-    return JSValueUtils::wrapModule2(engine, engine->newQObject(this), wrapperSrc);
 }
 
 bool TimerModule::isBusy() {

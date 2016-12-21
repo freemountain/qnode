@@ -13,10 +13,10 @@
 
 #include <assert.h>
 
-#include "jsvalueutils.h"
-#include "utils.h"
+#include "src/jsvalueutils.h"
+#include "src/utils.h"
 
-#include "modules/coreprovider.h"
+#include "src/modules/coreprovider.h"
 #include "src/nodemodule.h"
 
 ModuleLoader::ModuleLoader(QJSEngine *engine) : QObject(engine)
@@ -31,7 +31,7 @@ QJSValue ModuleLoader::require(QString module, QString path) {
 
     QJSValue loaded = loadCoreModule(module);
 
-    if(loaded.isObject()) return returnModule(loaded, path);
+    if(loaded.isObject()) return returnModule(loaded, module);
 
     if(module.startsWith("./") || module.startsWith("../") || module.startsWith("/")) {
             QString resolvedPath = Utils::resolvePath(path, module);

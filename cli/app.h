@@ -1,18 +1,20 @@
 #ifndef APP_H
 #define APP_H
 
-#include <QObject>
+#include "src/engine/nodeengine.h"
 #include <QCoreApplication>
-#include "src/nodeengine.h"
+#include <QObject>
 
-class App : public QCoreApplication
-{
-    Q_OBJECT
+class App : public QCoreApplication {
+
+  Q_OBJECT
 public:
-    App(int &argc, char *argv[]);
-    int exec();
+  App(int &argc, char *argv[]);
+  int exec();
+
 private:
-    NodeEngine* engine;
+  NodeEngine *engine;
+  QTextStream *out;
 };
 
 #endif // APP_H

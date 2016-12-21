@@ -1,8 +1,8 @@
 #include "nodeeventloop.h"
 
 #include <QDebug>
-#include "jsvalueutils.h"
-#include "utils.h"
+#include "src/jsvalueutils.h"
+#include "src/utils.h"
 
 NodeEventLoop::NodeEventLoop(QObject *parent) : QObject(parent)
 {

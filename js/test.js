@@ -1,13 +1,4 @@
-var timers = require('timers');
-var process = require('process');
+var util = require('util');
 
-//timers.setTimeout(process.send, 1, 1);
-timers.setInterval(function(n) {
-  console.log('\niiiii', n);
-}, 4000, 2);
-
-console.log('hi');
-
-timers.setImmediate(function(a, b) {
-  console.log("imm", a + b);
-}, 1, 2);
+console.log(Object.create);
+console.log('util:', util.format("hello %s %d", 3, 3));

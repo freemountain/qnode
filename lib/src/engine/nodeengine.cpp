@@ -1,7 +1,7 @@
 #include "nodeengine.h"
 
-#include "jsvalueutils.h"
-#include "utils.h"
+#include "src/jsvalueutils.h"
+#include "src/utils.h"
 
 #include <QDebug>
 
@@ -10,13 +10,14 @@ NodeEngine::NodeEngine(QObject *parent) : QObject(parent)
 
     this->engine = new QJSEngine(this);
     this->engine->installExtensions(QJSEngine::ConsoleExtension);
+    this->loader = new ModuleLoader(this->engine);
+    this->ctx = new EngineContext(this, this->loader, this->engine);
+
     this->engine->evaluate(Utils::readFile(":/libqnode/js/prelude.js"), "@prelude");
     this->loop = new NodeEventLoop(this);
-    this->coreProvider = new CoreProvider(engine);
+    this->coreProvider = new CoreProvider(ctx);
 
-    this->loader = new ModuleLoader(this->engine);
     this->loader->addModuleProvider(this->coreProvider);
-    this->engine->globalObject().setProperty("_loader", this->loader->getJSValue());
 
     connect(this->loader, &ModuleLoader::loadedNativeModule, this->loop, &NodeEventLoop::addNativeModule);
 
@@ -28,6 +29,21 @@ NodeEngine::NodeEngine(QObject *parent) : QObject(parent)
     });
 
     connect(this->loop, &NodeEventLoop::ipcMessage, this, &NodeEngine::ipcMessage);
+
+    // add globals
+    QJSValue global = this->engine->globalObject();
+    QJSValue timers = this->loader->require("timers", "").property("exports");
+
+    global.setProperty("global", global);
+    global.setProperty("_loader", this->loader->getJSValue());
+    global.setProperty("console", this->loader->require("console", "").property("exports"));
+    global.setProperty("process", this->loader->require("process", "").property("exports"));
+    global.setProperty("setTimeout", timers.property("setTimeout"));
+    global.setProperty("clearTimeout", timers.property("clearTimeout"));
+    global.setProperty("setInterval", timers.property("setInterval"));
+    global.setProperty("clearInterval", timers.property("clearInterval"));
+    global.setProperty("setImmediate", timers.property("setImmediate"));
+    global.setProperty("clearImmediate", timers.property("clearImmediate"));
 }
 
 void NodeEngine::start(QString entry, QString path) {
@@ -57,4 +73,12 @@ QJSValue NodeEngine::parseJson(QString json) {
 
 QJSEngine* NodeEngine::getEngine() {
     return this->engine;
+}
+
+QString NodeEngine::readAllStandardError() {
+    return this->ctx->readAllStandardError();
+}
+
+QString NodeEngine::readAllStandardOutput() {
+    return this->ctx->readAllStandardOutput();
 }

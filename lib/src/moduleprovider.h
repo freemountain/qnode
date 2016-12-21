@@ -6,7 +6,6 @@
 #include <QJSValue>
 #include <QStringList>
 
-#include <src/nodeeventloop.h>
 #include <src/nodemodule.h>
 
 class ModuleProvider {

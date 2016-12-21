@@ -5,15 +5,12 @@
 #include <QDebug>
 #include <QJSEngine>
 #include <QDir>
-#include <QJsonDocument>
-
 #include <QDirIterator>
 #include <QEventLoop>
-#include "src/moduleloader.h"
+
 #include "src/utils.h"
 #include "src/jsvalueutils.h"
-
-#include "src/nodeengine.h"
+#include "src/engine/nodeengine.h"
 
 class JSTest : public QObject
 {
