@@ -7,12 +7,14 @@
 #include <QObject>
 
 #include <src/modules/basemodule.h>
+
+#include "qnode.h"
 #include "src/engine/enginecontext.h"
 
 class ProcessModule : public BaseModule {
   Q_OBJECT
  public:
-  explicit ProcessModule(EngineContext* ctx);
+  explicit ProcessModule(QNodeEngineContext* ctx);
 
   Q_INVOKABLE void nextTick(QJSValue callback, QJSValue args);
   Q_INVOKABLE void send(QJSValue msg);

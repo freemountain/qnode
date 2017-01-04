@@ -3,7 +3,8 @@ TEMPLATE = subdirs
 SUBDIRS += \
     lib \
     cli \
-    test
+    test \
+    nativeModule
 
 cli.depends = lib
 test.depends = lib

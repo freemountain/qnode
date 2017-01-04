@@ -10,7 +10,8 @@ CONFIG += console
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    app.cpp
+    app.cpp \
+    repl.cpp
 
 
 #win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../lib/release/ -lqnode
@@ -21,7 +22,8 @@ SOURCES += main.cpp \
 #DEPENDPATH += $$PWD/../lib
 
 HEADERS += \
-    app.h
+    app.h \
+    repl.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../lib/release/ -lqnode
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../lib/debug/ -lqnode

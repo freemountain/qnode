@@ -41,6 +41,18 @@ QString JSValueUtils::stringify(QJSValue value) {
     return value.toString();
   }
 
+  if (value.isError()) {
+    QString result = value.property("name").toString() + ": " +
+                     value.property("message").toString() + "\n";
+
+    QStringList stackLines = value.property("stack").toString().split("\n");
+
+    for (int i = 0; i < stackLines.size(); i++)
+      result.append("  at " + stackLines.at(i) + "\n");
+
+    return result;
+  }
+
   if (value.isArray()) {
     QStringList elements;
     QString props = stringifyProps(value, QStringList() << "length", true);
@@ -70,22 +82,27 @@ QString JSValueUtils::stringify(QJSValue value) {
     return QString("[%1]").arg(elements.join(", "));
   }
 
+  if (value.isCallable()) {
+    QJSValue nameProp = value.property("name");
+    QString nameTag = nameProp.isString() ? ": " + nameProp.toString() : "";
+    QString props = stringifyProps(value, QStringList() << "length"
+                                                        << "prototype"
+                                                        << "constructor"
+                                                        << "name");
+
+    if (props == "")
+      return QString("[Function%1]").arg(nameTag);
+    else
+      return QString("{ [Function%1] %2}").arg(nameTag, props);
+  }
+
   if (value.isObject() && !value.isArray()) {
     QString props = stringifyProps(value);
 
     return QString("{%1}").arg(props);
   }
 
-  QString tag("");
-
-  if (value.isCallable()) {
-    QString name = value.property("name").toString();
-    QString nameTag = name == "" ? "" : QString(": %1").arg(name);
-
-    tag = QString("[Function%1]").arg(nameTag);
-  }
-
-  return tag;  // value.toVariant().toString();
+  return "";
 }
 
 QJSValue JSValueUtils::createValue(QJSEngine* engine, QString src) {

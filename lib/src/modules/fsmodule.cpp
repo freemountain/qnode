@@ -5,7 +5,7 @@
 
 #include "src/jsvalueutils.h"
 
-FsModule::FsModule(EngineContext* ctx) : BaseModule(ctx) {
+FsModule::FsModule(QNodeEngineContext* ctx) : BaseModule(ctx) {
   qRegisterMetaType<QJSValueList>();
 
   this->nextId = 0;

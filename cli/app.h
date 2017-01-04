@@ -10,6 +10,8 @@ class App : public QCoreApplication {
  public:
   App(int& argc, char* argv[]);
   int exec();
+  void interpreterMode(QString file);
+  void replMode();
 
  private:
   NodeEngine* engine;

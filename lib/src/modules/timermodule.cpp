@@ -5,7 +5,7 @@
 #include "src/jsvalueutils.h"
 #include "src/utils.h"
 
-TimerModule::TimerModule(EngineContext* ctx) : BaseModule(ctx) {
+TimerModule::TimerModule(QNodeEngineContext* ctx) : BaseModule(ctx) {
   this->jsInstance =
       this->ctx->wrapModule(this, ":/libqnode/js/timersWrapper.js");
   this->nextID = 0;

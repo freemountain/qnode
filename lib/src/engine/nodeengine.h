@@ -5,17 +5,19 @@
 #include <QJSValue>
 #include <QObject>
 
+#include "qnode.h"
 #include "src/engine/enginecontext.h"
 #include "src/engine/inodeengine.h"
 #include "src/engine/moduleloader.h"
 #include "src/engine/nodeeventloop.h"
 #include "src/modules/coreprovider.h"
 
-class NodeEngine : public QObject, public INodeEngine {
+class NodeEngine : public QObject, public QNodeEngine {
   Q_OBJECT
-  Q_INTERFACES(INodeEngine)
+  Q_INTERFACES(QNodeEngine)
  public:
   explicit NodeEngine(QObject* parent = 0);
+  QJSValue evaluate(QString src);
   QJSValue require(QString js);
   QJSValue parseJson(QString json);
   QJSEngine* getEngine();

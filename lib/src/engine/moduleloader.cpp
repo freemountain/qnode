@@ -142,9 +142,9 @@ QStringList ModuleLoader::nodeModulesPaths(QString start) {
 QJSValue ModuleLoader::getJSValue() { return this->jsLoader; }
 
 QJSValue ModuleLoader::loadCoreModule(QString path) {
-  NodeModule* result;
+  QNodeModule* result;
   QJSValue jsModule;
-  ModuleProvider* current;
+  QNodeModuleProvider* current;
 
   for (int i = 0; i < this->provider.size(); i++) {
     current = this->provider.at(i);
@@ -166,7 +166,7 @@ QJSValue ModuleLoader::loadCoreModule(QString path) {
   return QJSValue(QJSValue::NullValue);
 }
 
-void ModuleLoader::addModuleProvider(ModuleProvider* provider) {
+void ModuleLoader::addModuleProvider(QNodeModuleProvider* provider) {
   this->provider.append(provider);
 }
 

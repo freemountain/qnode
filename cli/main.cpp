@@ -5,7 +5,7 @@
 #include <QTextCodec>
 
 #include "app.h"
-#include "src/engine/enginecontext.h"
+//#include "src/engine/enginecontext.h"
 
 int main(int argc, char* argv[]) {
   App* a = new App(argc, argv);

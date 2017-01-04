@@ -6,8 +6,8 @@
 #include <QObject>
 #include <QQueue>
 
+#include "qnode.h"
 #include "src/nodemodule.h"
-
 class NodeEvent {
  public:
   explicit NodeEvent(QJSValue target, QJSValueList arguments) {
@@ -28,7 +28,7 @@ class NodeEventLoop : public QObject {
 
  private:
   QJSEngine* engine;
-  QList<NodeModule*> modules;
+  QList<QNodeModule*> modules;
   QQueue<NodeEvent> queue;
   bool running;
   bool idle;
@@ -42,7 +42,7 @@ class NodeEventLoop : public QObject {
   void _onTick(int n);
 
  public slots:
-  void addNativeModule(NodeModule* module);
+  void addNativeModule(QNodeModule* module);
   void postEvent(QJSValue target, QJSValueList arguments);
   void start();
 };

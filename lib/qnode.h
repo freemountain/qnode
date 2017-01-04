@@ -8,6 +8,7 @@
 class QNodeEngine {
  public:
   virtual ~QNodeEngine() {}
+  virtual QJSValue evaluate(QString src) = 0;
   virtual QString readAllStandardOutput() = 0;
   virtual QString readAllStandardError() = 0;
 
@@ -27,24 +28,24 @@ class QNodeEngineContext {
  public:
   virtual ~QNodeEngineContext() {}
 
-  QTextStream* getOutStream();
-  QTextStream* getErrorStream();
+  virtual QTextStream* getOutStream() = 0;
+  virtual QTextStream* getErrorStream() = 0;
 
-  Q_INVOKABLE QJSValue require(QString module);
-  QJSValue wrapModule(QObject* module, QString wrapperPath,
-                      QJSValueList args = QJSValueList());
+  Q_INVOKABLE virtual QJSValue require(QString module) = 0;
+  virtual QJSValue wrapModule(QObject* module, QString wrapperPath,
+                              QJSValueList args = QJSValueList()) = 0;
 
-  QString readAllStandardOutput();
-  QString readAllStandardError();
+  virtual QString readAllStandardOutput() = 0;
+  virtual QString readAllStandardError() = 0;
 
-  QJSEngine* getJsEngine();
-  QNodeEngine* getNodeEngine();
+  virtual QJSEngine* getJsEngine() = 0;
+  virtual QNodeEngine* getNodeEngine() = 0;
 
  public slots:
-  void writeStandardOutput(QString data);
-  void writeStandardError(QString data);
-  void flushStandardOutput();
-  void flushStandardError();
+  virtual void writeStandardOutput(QString data) = 0;
+  virtual void writeStandardError(QString data) = 0;
+  virtual void flushStandardOutput() = 0;
+  virtual void flushStandardError() = 0;
 };
 
 Q_DECLARE_INTERFACE(QNodeEngineContext, "QNodeEngineContext")

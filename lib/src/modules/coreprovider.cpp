@@ -12,38 +12,39 @@
 #include "src/jsvalueutils.h"
 #include "src/utils.h"
 
-CoreProvider::CoreProvider(EngineContext* ctx) : QObject(ctx) {
+CoreProvider::CoreProvider(QNodeEngineContext* ctx)
+    : QObject(ctx->getJsEngine()) {
   this->ctx = ctx;
 }
 
-NodeModule* CoreProvider::module(QString module) {
+QNodeModule* CoreProvider::module(QString module) {
   if (module == "process") {
     ProcessModule* proc = new ProcessModule(ctx);
-    NodeModule* mod = qobject_cast<NodeModule*>(proc);
+    QNodeModule* mod = qobject_cast<QNodeModule*>(proc);
     return mod;
   }
 
   if (module == "timers") {
     TimerModule* timer = new TimerModule(ctx);
-    NodeModule* mod = qobject_cast<NodeModule*>(timer);
+    QNodeModule* mod = qobject_cast<QNodeModule*>(timer);
     return mod;
   }
 
   if (module == "console") {
     ConsoleModule* console = new ConsoleModule(ctx);
-    NodeModule* mod = qobject_cast<NodeModule*>(console);
+    QNodeModule* mod = qobject_cast<QNodeModule*>(console);
     return mod;
   }
 
   if (module == "util") {
     UtilModule* util = new UtilModule(ctx);
-    NodeModule* mod = qobject_cast<NodeModule*>(util);
+    QNodeModule* mod = qobject_cast<QNodeModule*>(util);
     return mod;
   }
 
   if (module == "fs") {
     FsModule* fs = new FsModule(ctx);
-    NodeModule* mod = qobject_cast<NodeModule*>(fs);
+    QNodeModule* mod = qobject_cast<QNodeModule*>(fs);
     return mod;
   }
 

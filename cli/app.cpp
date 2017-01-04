@@ -5,9 +5,11 @@
 #include <QJSEngine>
 #include <QJSValueIterator>
 #include <QObject>
-
+#include <QSocketNotifier>
 #include "qnode.h"
+#include "repl.h"
 #include "src/engine/moduleloader.h"
+#include "src/engine/nodeengine.h"
 #include "src/jsvalueutils.h"
 #include "src/utils.h"
 
@@ -19,6 +21,39 @@ App::App(int& argc, char* argv[])
   this->err = new QTextStream(stderr);
 
   this->engine = new NodeEngine(this);
+}
+
+int App::exec() {
+  if (this->arguments().size() < 2) {
+    replMode();
+    // qFatal("no entry point");
+  } else {
+    QString arg = this->arguments().at(1);
+    interpreterMode(arg);
+  }
+  return QCoreApplication::exec();
+}
+
+void App::replMode() {
+  QNodeEngine* qnodeEngine = qobject_cast<QNodeEngine*>(this->engine);
+  REPL* repl = new REPL(qnodeEngine, this->out, this);
+
+  QSocketNotifier* notifier =
+      new QSocketNotifier(0, QSocketNotifier::Read, this);
+
+  connect(notifier, &QSocketNotifier::activated, [this, repl]() {
+    QTextStream qin(stdin);
+    QString line = qin.readLine();
+    repl->evaluate(line);
+    // qDebug() << "inn: " << line;
+  });
+
+  // connect(repl, &REPL::)
+}
+
+void App::interpreterMode(QString file) {
+  QString entry = Utils::resolvePath(QDir::currentPath(), file);
+  QString path = Utils::dirname(entry);
 
   connect(engine, &NodeEngine::finished,
           [this](const QJSValue& e, const bool& failed) {
@@ -53,16 +88,6 @@ App::App(int& argc, char* argv[])
     this->err->operator<<(this->engine->readAllStandardError());
     this->err->flush();
   });
-}
-
-int App::exec() {
-  if (this->arguments().size() < 2) {
-    qFatal("no entry point");
-  }
-  QString arg = this->arguments().at(1);
-  QString entry = Utils::resolvePath(QDir::currentPath(), arg);
-  QString path = Utils::dirname(entry);
 
   this->engine->start(entry, path);
-  return QCoreApplication::exec();
 }

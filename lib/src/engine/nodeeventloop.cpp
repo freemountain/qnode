@@ -61,7 +61,7 @@ void NodeEventLoop::start() {
   emit _tick(1);
 }
 
-void NodeEventLoop::addNativeModule(NodeModule* module) {
+void NodeEventLoop::addNativeModule(QNodeModule* module) {
   this->modules.append(module);
   QObject::connect(dynamic_cast<QObject*>(module),
                    SIGNAL(dispatch(QJSValue, QJSValueList)), this,

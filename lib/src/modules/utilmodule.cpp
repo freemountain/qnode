@@ -2,7 +2,7 @@
 
 #include "src/jsvalueutils.h"
 
-UtilModule::UtilModule(EngineContext* ctx) : BaseModule(ctx) {
+UtilModule::UtilModule(QNodeEngineContext *ctx) : BaseModule(ctx) {
   this->jsInstance =
       this->ctx->wrapModule(this, ":/libqnode/js/utilWrapper.js");
 }

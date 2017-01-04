@@ -14,7 +14,7 @@ NodeEngine::NodeEngine(QObject* parent) : QObject(parent) {
   this->engine->evaluate(Utils::readFile(":/libqnode/js/prelude.js"),
                          "#prelude");
   this->loop = new NodeEventLoop(this->engine);
-  this->coreProvider = new CoreProvider(ctx);
+  this->coreProvider = new CoreProvider(qobject_cast<QNodeEngineContext*>(ctx));
 
   this->loader->addModuleProvider(this->coreProvider);
 
@@ -84,4 +84,11 @@ QString NodeEngine::readAllStandardError() {
 
 QString NodeEngine::readAllStandardOutput() {
   return this->ctx->readAllStandardOutput();
+}
+
+QJSValue NodeEngine::evaluate(QString src) {
+  QJSValue result = this->engine->evaluate(src);
+  this->loop->start();
+
+  return result;
 }

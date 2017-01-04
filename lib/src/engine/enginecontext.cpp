@@ -3,7 +3,7 @@
 #include "src/jsvalueutils.h"
 #include "src/utils.h"
 
-EngineContext::EngineContext(INodeEngine* nodeEngine, ModuleLoader* loader,
+EngineContext::EngineContext(QNodeEngine* nodeEngine, ModuleLoader* loader,
                              QJSEngine* jsEngine)
     : QObject(dynamic_cast<QObject*>(nodeEngine)) {
   this->nodeEngine = nodeEngine;
@@ -67,4 +67,8 @@ QJSValue EngineContext::wrapModule(QObject* module, QString wrapperPath,
 
 QJSEngine* EngineContext::getJsEngine() { return this->jsEngine; }
 
-INodeEngine* EngineContext::getNodeEngine() { return this->nodeEngine; }
+QNodeEngine* EngineContext::getNodeEngine() { return this->nodeEngine; }
+
+QTextStream* EngineContext::getErrorStream() { return this->std_err; }
+
+QTextStream* EngineContext::getOutStream() { return this->std_out; }

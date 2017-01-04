@@ -4,20 +4,21 @@
 #include <QObject>
 
 #include <src/nodemodule.h>
+#include "qnode.h"
 #include "src/engine/enginecontext.h"
 
-class BaseModule : public QObject, public NodeModule {
+class BaseModule : public QObject, public QNodeModule {
   Q_OBJECT
-  Q_INTERFACES(NodeModule)
+  Q_INTERFACES(QNodeModule)
  public:
-  static BaseModule* fromJSValue(EngineContext* ctx, QJSValue value);
-  explicit BaseModule(EngineContext* ctx);
+  static BaseModule* fromJSValue(QNodeEngineContext* ctx, QJSValue value);
+  explicit BaseModule(QNodeEngineContext* ctx);
 
   QJSValue getJSInstance();
   bool isBusy();
 
  protected:
-  EngineContext* ctx;
+  QNodeEngineContext* ctx;
   QJSValue jsInstance;
 
  signals:

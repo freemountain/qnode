@@ -2,7 +2,7 @@
 
 #include "src/jsvalueutils.h"
 
-ProcessModule::ProcessModule(EngineContext* ctx) : BaseModule(ctx) {
+ProcessModule::ProcessModule(QNodeEngineContext* ctx) : BaseModule(ctx) {
   this->jsInstance =
       this->ctx->wrapModule(this, ":/libqnode/js/processWrapper.js");
 }

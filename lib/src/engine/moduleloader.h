@@ -6,6 +6,7 @@
 #include <QList>
 #include <QObject>
 
+#include "qnode.h"
 #include "src/engine/nodeeventloop.h"
 #include "src/moduleprovider.h"
 
@@ -19,17 +20,17 @@ class ModuleLoader : public QObject {
 
   QJSValue getCacheProp();
   QJSValue getJSValue();
-  void addModuleProvider(ModuleProvider* provider);
+  void addModuleProvider(QNodeModuleProvider* provider);
 
  signals:
-  void loadedNativeModule(NodeModule* module);
+  void loadedNativeModule(QNodeModule* module);
 
  public slots:
  private:
   QJSEngine* engine;
   QJSValue moduleCache;
   QJSValue jsLoader;
-  QList<ModuleProvider*> provider;
+  QList<QNodeModuleProvider*> provider;
 
   bool inCache(QString key);
   QJSValue getCache(QString key);

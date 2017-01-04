@@ -11,6 +11,7 @@
 
 #include <src/modules/basemodule.h>
 #include <src/nodemodule.h>
+#include "qnode.h"
 #include "src/engine/enginecontext.h"
 #include "src/utils.h"
 
@@ -30,7 +31,7 @@ Q_DECLARE_METATYPE(QJSValueList)
 class FsModule : public BaseModule {
   Q_OBJECT
  public:
-  explicit FsModule(EngineContext* ctx);
+  explicit FsModule(QNodeEngineContext* ctx);
 
   Q_INVOKABLE QStringList availableCodecs();
   Q_INVOKABLE void clear(int id);

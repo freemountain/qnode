@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTextStream>
 
+#include "qnode.h"
 #include "src/engine/inodeengine.h"
 #include "src/engine/moduleloader.h"
 
@@ -11,10 +12,12 @@
 
 // class NodeEngine;
 
-class EngineContext : public QObject {
+class EngineContext : public QObject, public QNodeEngineContext {
   Q_OBJECT
+  Q_INTERFACES(QNodeEngineContext)
+
  public:
-  explicit EngineContext(INodeEngine* nodeEngine, ModuleLoader* loader,
+  explicit EngineContext(QNodeEngine* nodeEngine, ModuleLoader* loader,
                          QJSEngine* jsEngine);
 
   QTextStream* getOutStream();
@@ -28,12 +31,12 @@ class EngineContext : public QObject {
   QString readAllStandardError();
 
   QJSEngine* getJsEngine();
-  INodeEngine* getNodeEngine();
+  QNodeEngine* getNodeEngine();
 
  private:
   QTextStream* std_out;
   QTextStream* std_err;
-  INodeEngine* nodeEngine;
+  QNodeEngine* nodeEngine;
   QJSEngine* jsEngine;
   ModuleLoader* loader;
   QJSValue jsCtx;
