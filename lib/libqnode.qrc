@@ -8,5 +8,6 @@
         <file>js/consoleWrapper.js</file>
         <file>js/utilWrapper.js</file>
         <file>js/assertModule.js</file>
+        <file>js/fsWrapper.js</file>
     </qresource>
 </RCC>

@@ -1,6 +1,3 @@
 #include "assertmodule.h"
 
-AssertModule::AssertModule(QObject *parent) : QObject(parent)
-{
-
-}
+AssertModule::AssertModule(QObject* parent) : QObject(parent) {}

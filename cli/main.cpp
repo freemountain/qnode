@@ -1,15 +1,14 @@
 #include <QCoreApplication>
-#include <QJSEngine>
 #include <QDebug>
+#include <QJSEngine>
 #include <QObject>
+#include <QTextCodec>
 
 #include "app.h"
 #include "src/engine/enginecontext.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
+  App* a = new App(argc, argv);
 
-    App* a = new App(argc, argv);
-    a->exec();
-
+  a->exec();
 }

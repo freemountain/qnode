@@ -3,15 +3,16 @@
 
 #include <QObject>
 
-#include <src/nodemodule.h>
 #include <src/modules/basemodule.h>
+#include <src/nodemodule.h>
 #include "src/engine/enginecontext.h"
 
-class UtilModule : public BaseModule
-{
-    Q_OBJECT
-public:
-    explicit UtilModule(EngineContext* ctx);
+class UtilModule : public BaseModule {
+  Q_OBJECT
+ public:
+  explicit UtilModule(EngineContext* ctx);
+
+  Q_INVOKABLE QString inspect(QJSValue object, int depth = 2);
 };
 
-#endif // UTILMODULE_H
+#endif  // UTILMODULE_H

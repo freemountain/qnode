@@ -6,24 +6,24 @@
 #include <src/nodemodule.h>
 #include "src/engine/enginecontext.h"
 
-class BaseModule : public QObject, public NodeModule
-{
-    Q_OBJECT
-    Q_INTERFACES(NodeModule)
-public:
-    explicit BaseModule(EngineContext* ctx);
+class BaseModule : public QObject, public NodeModule {
+  Q_OBJECT
+  Q_INTERFACES(NodeModule)
+ public:
+  static BaseModule* fromJSValue(EngineContext* ctx, QJSValue value);
+  explicit BaseModule(EngineContext* ctx);
 
-    QJSValue getJSInstance();
-    bool isBusy();
+  QJSValue getJSInstance();
+  bool isBusy();
 
-protected:
-    EngineContext* ctx;
-    QJSValue jsInstance;
+ protected:
+  EngineContext* ctx;
+  QJSValue jsInstance;
 
-signals:
-    void dispatch(QJSValue target, QJSValueList args);
-    void ipcMessage(QJSValue msg);
-    void stdOutMessage(QString msg);
+ signals:
+  void dispatch(const QJSValue& target, const QJSValueList& args);
+  void ipcMessage(QJSValue msg);
+  void stdOutMessage(QString msg);
 };
 
-#endif // BASEMODULE_H
+#endif  // BASEMODULE_H

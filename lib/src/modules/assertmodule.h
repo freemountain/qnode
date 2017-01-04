@@ -3,15 +3,14 @@
 
 #include <QObject>
 
-class AssertModule : public QObject
-{
-    Q_OBJECT
-public:
-    explicit AssertModule(QObject *parent = 0);
+class AssertModule : public QObject {
+  Q_OBJECT
+ public:
+  explicit AssertModule(QObject* parent = 0);
 
-signals:
+ signals:
 
-public slots:
+ public slots:
 };
 
-#endif // ASSERTMODULE_H
+#endif  // ASSERTMODULE_H

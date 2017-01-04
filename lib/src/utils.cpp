@@ -1,33 +1,27 @@
 #include "utils.h"
 
-#include <QFile>
-#include <QTextStream>
-#include <QFileInfo>
 #include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QTextStream>
 
-Utils::Utils()
-{
-
-}
+Utils::Utils() {}
 
 QString Utils::readFile(QString path) {
-    QFile file(path);
-    if (!file.open(QIODevice::ReadOnly))
-        return NULL;
+  QFile file(path);
+  if (!file.open(QIODevice::ReadOnly)) return NULL;
 
-    QTextStream stream(&file);
-    QString contents = stream.readAll();
-    file.close();
+  QTextStream stream(&file);
+  QString contents = stream.readAll();
+  file.close();
 
-    return contents;
+  return contents;
 }
 
 QString Utils::resolvePath(QString cwd, QString path) {
-    QString combinedPath = QFileInfo(QDir(cwd), path).absoluteFilePath();
+  QString combinedPath = QFileInfo(QDir(cwd), path).absoluteFilePath();
 
-    return QDir(combinedPath).path();
+  return QDir(combinedPath).path();
 }
 
-QString Utils::dirname(QString path) {
-    return QDir(path).dirName();
-}
+QString Utils::dirname(QString path) { return QDir(path).dirName(); }

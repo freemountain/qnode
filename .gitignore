@@ -1,4 +1,5 @@
 build
+node_modules
 
 /.qmake.cache
 /.qmake.stash

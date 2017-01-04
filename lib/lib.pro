@@ -1,6 +1,6 @@
 TEMPLATE = lib
 
-QT += qml
+QT += qml concurrent
 QT -= gui
 
 TARGET = qnode
@@ -18,7 +18,8 @@ SOURCES += $$PWD/src/jsvalueutils.cpp \
     src/engine/enginecontext.cpp \
     src/modules/utilmodule.cpp \
     src/modules/basemodule.cpp \
-    src/modules/assertmodule.cpp
+    src/modules/assertmodule.cpp \
+    src/modules/fsmodule.cpp
 
 HEADERS += $$PWD/src/jsvalueutils.h \
     src/utils.h \
@@ -35,7 +36,9 @@ HEADERS += $$PWD/src/jsvalueutils.h \
     src/engine/inodeengine.h \
     src/modules/utilmodule.h \
     src/modules/basemodule.h \
-    src/modules/assertmodule.h
+    src/modules/assertmodule.h \
+    src/modules/fsmodule.h \
+    qnode.h
 
 RESOURCES += libqnode.qrc
 
