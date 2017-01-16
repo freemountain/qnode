@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QIODevice>
 #include <QJSValueList>
+#include <QPluginLoader>
 #include <QString>
 #include <QStringList>
 #include <QTextStream>
@@ -62,6 +63,9 @@ QJSValue ModuleLoader::loadAsFile(QString path) {
 
   if (QFileInfo(path + ".js").isFile())
     return JSValueUtils::loadModule(this->engine, this->jsLoader, path + ".js");
+
+  if (QFileInfo(path + ".qnode").isFile())
+    return loadNativeModule(path + ".qnode");
 
   return QJSValue(QJSValue::SpecialValue::NullValue);
 }
@@ -127,7 +131,6 @@ QStringList ModuleLoader::nodeModulesPaths(QString start) {
   QStringList dirs;
 
   parts.removeFirst();
-  qDebug() << "modules: " << start << ": " << parts;
   for (int i = parts.size() - 1; i >= 0; i--) {
     if (parts.at(i) == "node_modules") continue;
     QStringList currentDir;
@@ -148,7 +151,7 @@ QJSValue ModuleLoader::loadCoreModule(QString path) {
 
   for (int i = 0; i < this->provider.size(); i++) {
     current = this->provider.at(i);
-    result = current->module(path);
+    result = current->module(this->ctx, path);
 
     if (result == nullptr) continue;
 
@@ -182,4 +185,24 @@ QJSValue ModuleLoader::getCache(QString key) {
   if (!inCache(key)) return QJSValue(QJSValue::UndefinedValue);
 
   return this->moduleCache.property(key);
+}
+
+void ModuleLoader::setCtx(QNodeEngineContext* ctx) { this->ctx = ctx; }
+
+QJSValue ModuleLoader::loadNativeModule(QString path) {
+  TRACE_METHOD();
+  QPluginLoader loader(path);
+  QObject* plugin = loader.instance();
+  if (!plugin) return QJSValue(QJSValue::NullValue);
+
+  QNodeModuleProvider* providerInterface =
+      qobject_cast<QNodeModuleProvider*>(plugin);
+
+  if (!providerInterface) return QJSValue(QJSValue::NullValue);
+  QNodeModule* loaded = providerInterface->module(this->ctx, path);
+
+  QJSValue module = engine->newObject();
+  module.setProperty("exports", loaded->getJSInstance());
+
+  return module;
 }

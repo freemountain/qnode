@@ -11,11 +11,8 @@ class CoreProvider : public QObject, public QNodeModuleProvider {
   Q_INTERFACES(QNodeModuleProvider)
 
  public:
-  explicit CoreProvider(QNodeEngineContext* ctx);
-  QNodeModule* module(QString module);
-
- private:
-  QNodeEngineContext* ctx;
+  explicit CoreProvider(QObject* parent);
+  QNodeModule* module(QNodeEngineContext* ctx, QString module);
 };
 
 #endif  // COREPROVIDER_H

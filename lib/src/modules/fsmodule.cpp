@@ -89,7 +89,7 @@ QJSValue FsModule::writeFileSync(QString file, QString data, QString encoding,
   } catch (FsException e) {
     result = JSValueUtils::createError(this->ctx->getJsEngine(), e.msg, "");
   } catch (QException e) {
-    qDebug() << "excepppppttttt";
+    TRACE_METHOD();
     throw e;
   }
 

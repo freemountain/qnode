@@ -7,20 +7,24 @@
 #include "fsmodule.h"
 #include "processmodule.h"
 #include "timermodule.h"
+#include "typedarraymodule.h"
 #include "utilmodule.h"
 
 #include "src/jsvalueutils.h"
 #include "src/utils.h"
 
-CoreProvider::CoreProvider(QNodeEngineContext* ctx)
-    : QObject(ctx->getJsEngine()) {
-  this->ctx = ctx;
-}
+CoreProvider::CoreProvider(QObject* parent) : QObject(parent) {}
 
-QNodeModule* CoreProvider::module(QString module) {
+QNodeModule* CoreProvider::module(QNodeEngineContext* ctx, QString module) {
   if (module == "process") {
     ProcessModule* proc = new ProcessModule(ctx);
     QNodeModule* mod = qobject_cast<QNodeModule*>(proc);
+    return mod;
+  }
+
+  if (module == "typedarray") {
+    TypedArrayModule* tp = new TypedArrayModule(ctx);
+    QNodeModule* mod = qobject_cast<QNodeModule*>(tp);
     return mod;
   }
 
@@ -49,7 +53,7 @@ QNodeModule* CoreProvider::module(QString module) {
   }
 
   if (module == "assert") {
-    QJSValue jsMod = this->ctx->require(":/libqnode/js/assertModule.js");
+    QJSValue jsMod = ctx->require(":/libqnode/js/assertModule.js");
     return BaseModule::fromJSValue(ctx, jsMod);
   }
 

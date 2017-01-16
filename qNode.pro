@@ -4,7 +4,8 @@ SUBDIRS += \
     lib \
     cli \
     test \
-    nativeModule
+    nativeCap \
+    qnode-apk
 
 cli.depends = lib
 test.depends = lib

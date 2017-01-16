@@ -171,7 +171,7 @@ QJSValue JSValueUtils::loadModule(QJSEngine* engine, QJSValue loader,
   QJSValue result = factory.call(QJSValueList() << loader << exports << module
                                                 << path << dirname);
 
-  return result;
+  return module;
 }
 
 QJSValue JSValueUtils::wrapModule(QJSEngine* engine, QJSValue module,

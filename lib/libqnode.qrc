@@ -9,5 +9,6 @@
         <file>js/utilWrapper.js</file>
         <file>js/assertModule.js</file>
         <file>js/fsWrapper.js</file>
+        <file>js/typedArrayWrapper.js</file>
     </qresource>
 </RCC>

@@ -21,6 +21,7 @@ class ModuleLoader : public QObject {
   QJSValue getCacheProp();
   QJSValue getJSValue();
   void addModuleProvider(QNodeModuleProvider* provider);
+  void setCtx(QNodeEngineContext* ctx);
 
  signals:
   void loadedNativeModule(QNodeModule* module);
@@ -31,11 +32,13 @@ class ModuleLoader : public QObject {
   QJSValue moduleCache;
   QJSValue jsLoader;
   QList<QNodeModuleProvider*> provider;
+  QNodeEngineContext* ctx;
 
   bool inCache(QString key);
   QJSValue getCache(QString key);
   void addCache(QString key, QJSValue module);
 
+  QJSValue loadNativeModule(QString path);
   QJSValue loadCoreModule(QString path);
   QJSValue returnModule(QJSValue val, QString path);
 

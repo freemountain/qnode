@@ -1,0 +1,10 @@
+{
+  "name": "transpiler",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "install": "cd src && npm install",
+    "build" : "./src/node_modules/.bin/rollup -c rollup.config.js -o dist/buble.js src/src/index.js"
+  },
+  "license": "ISC"
+}

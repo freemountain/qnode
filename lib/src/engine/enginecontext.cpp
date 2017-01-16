@@ -6,6 +6,7 @@
 EngineContext::EngineContext(QNodeEngine* nodeEngine, ModuleLoader* loader,
                              QJSEngine* jsEngine)
     : QObject(dynamic_cast<QObject*>(nodeEngine)) {
+  this->cwd = QDir(QDir::currentPath());
   this->nodeEngine = nodeEngine;
   this->jsEngine = jsEngine;
   this->loader = loader;
@@ -72,3 +73,5 @@ QNodeEngine* EngineContext::getNodeEngine() { return this->nodeEngine; }
 QTextStream* EngineContext::getErrorStream() { return this->std_err; }
 
 QTextStream* EngineContext::getOutStream() { return this->std_out; }
+
+QString EngineContext::getCWD() { return this->cwd.absolutePath(); }

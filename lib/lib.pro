@@ -19,7 +19,11 @@ SOURCES += $$PWD/src/jsvalueutils.cpp \
     src/modules/utilmodule.cpp \
     src/modules/basemodule.cpp \
     src/modules/assertmodule.cpp \
-    src/modules/fsmodule.cpp
+    src/modules/fsmodule.cpp \
+    src/modules/typedarraymodule.cpp \
+    src/testRunner/testcase.cpp \
+    src/testRunner/testresult.cpp \
+    src/testRunner/testrunner.cpp
 
 HEADERS += $$PWD/src/jsvalueutils.h \
     src/utils.h \
@@ -38,7 +42,12 @@ HEADERS += $$PWD/src/jsvalueutils.h \
     src/modules/basemodule.h \
     src/modules/assertmodule.h \
     src/modules/fsmodule.h \
-    qnode.h
+    qnode.h \
+    src/modules/typedarraymodule.h \
+    src/testRunner/testcase.h \
+    src/testRunner/testresult.h \
+    src/testRunner/testrunner.h \
+    src/testRunner/tapetest.h
 
 RESOURCES += libqnode.qrc
 

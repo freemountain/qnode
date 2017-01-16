@@ -11,10 +11,11 @@ NodeEngine::NodeEngine(QObject* parent) : QObject(parent) {
   this->loader = new ModuleLoader(this->engine);
   this->ctx = new EngineContext(this, this->loader, this->engine);
 
+  this->loader->setCtx(ctx);
   this->engine->evaluate(Utils::readFile(":/libqnode/js/prelude.js"),
                          "#prelude");
   this->loop = new NodeEventLoop(this->engine);
-  this->coreProvider = new CoreProvider(qobject_cast<QNodeEngineContext*>(ctx));
+  this->coreProvider = new CoreProvider(this);
 
   this->loader->addModuleProvider(this->coreProvider);
 
@@ -31,6 +32,8 @@ NodeEngine::NodeEngine(QObject* parent) : QObject(parent) {
   // add globals
   QJSValue global = this->engine->globalObject();
   QJSValue timers = this->loader->require("timers", "").property("exports");
+  QJSValue typedArray =
+      this->loader->require("typedarray", "").property("exports");
 
   global.setProperty("global", global);
   global.setProperty("_loader", this->loader->getJSValue());
@@ -44,6 +47,26 @@ NodeEngine::NodeEngine(QObject* parent) : QObject(parent) {
   global.setProperty("clearInterval", timers.property("clearInterval"));
   global.setProperty("setImmediate", timers.property("setImmediate"));
   global.setProperty("clearImmediate", timers.property("clearImmediate"));
+  global.setProperty("ArrayBuffer", typedArray.property("ArrayBuffer"));
+  global.setProperty("Int8Array", typedArray.property("Int8Array"));
+  global.setProperty("Uint8Array", typedArray.property("Uint8Array"));
+  global.setProperty("Int16Array", typedArray.property("Int16Array"));
+  global.setProperty("Uint16Array", typedArray.property("Uint16Array"));
+  global.setProperty("Int32Array", typedArray.property("Int32Array"));
+  global.setProperty("Uint32Array", typedArray.property("Uint32Array"));
+  global.setProperty("Float32Array", typedArray.property("Float32Array"));
+  global.setProperty("Float64Array", typedArray.property("Float64Array"));
+
+  global.setProperty(
+      "require", JSValueUtils::createFunction(
+                     this->engine,
+                     "function require(path) {"
+                     " var result = _loader.require(path, process.cwd());"
+                     " if(result instanceof Error) throw result;"
+                     " if(result === undefined || result === null) throw new "
+                     "     Error('Could not find ' + path);"
+                     "  return result.exports;"
+                     "}"));
 }
 
 void NodeEngine::start(QString entry, QString path) {
@@ -57,7 +80,6 @@ void NodeEngine::start(QString entry, QString path) {
                     .arg(entry, path);
 
   QJSValue entrypoint = JSValueUtils::createFunction(this->engine, src, entry);
-
   if (entrypoint.isError()) {
     emit finished(entrypoint, true);
     return;

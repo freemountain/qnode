@@ -1,13 +1,12 @@
-var fs = require('fs');
-var util = require('util');
+var t = require('typedarray');
 
-console.log(Object.keys(fs));
+console.log('createProxy', t.createProxy);
 
-fs.writeFile("/Users/dodo/Projekte/top/qNode/build/greekAnthem1.txt", 'latin1ÄÖPLssssÜ', {
-  encoding: "utf8",
-  flag: "wr"
-},function(err) {
-console.log('result', err);
-});
+var p = t.createProxy({
+  a: 4
+}, {});
 
-//setTimeout(function(err, data) {}, 2000);
+
+console.log('p["a"]:', p['a']);
+//console.log(Object.keys(p));
+console.log("end");

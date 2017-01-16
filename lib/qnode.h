@@ -2,6 +2,8 @@
 #define QNODE_H
 
 #include <QJSValue>
+
+#include <QDir>
 #include <QObject>
 #include <QTextStream>
 
@@ -40,6 +42,7 @@ class QNodeEngineContext {
 
   virtual QJSEngine* getJsEngine() = 0;
   virtual QNodeEngine* getNodeEngine() = 0;
+  Q_INVOKABLE virtual QString getCWD() = 0;
 
  public slots:
   virtual void writeStandardOutput(QString data) = 0;
@@ -68,7 +71,7 @@ class QNodeModuleProvider {
  public:
   virtual ~QNodeModuleProvider() {}
 
-  virtual QNodeModule* module(QString module) = 0;
+  virtual QNodeModule* module(QNodeEngineContext* ctx, QString module) = 0;
 };
 
 Q_DECLARE_INTERFACE(QNodeModuleProvider, "QNodeModuleProvider")

@@ -32,6 +32,7 @@ class EngineContext : public QObject, public QNodeEngineContext {
 
   QJSEngine* getJsEngine();
   QNodeEngine* getNodeEngine();
+  Q_INVOKABLE QString getCWD();
 
  private:
   QTextStream* std_out;
@@ -40,6 +41,7 @@ class EngineContext : public QObject, public QNodeEngineContext {
   QJSEngine* jsEngine;
   ModuleLoader* loader;
   QJSValue jsCtx;
+  QDir cwd;
 
   QString out_buffer;
   QString err_buffer;

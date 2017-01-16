@@ -1,6 +1,6 @@
 build
-node_modules
-
+dist
+js-deps/*/node_modules
 /.qmake.cache
 /.qmake.stash
 *.pro.user
