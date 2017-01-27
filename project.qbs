@@ -22,7 +22,6 @@ Project {
 
     qbsSearchPaths: ["qbs"]
     references: [
-        "share/default/default.qbs",
         "qbs/vendor/gel.qbs",
 
         "src/qnode-cli/qnode-cli.qbs",

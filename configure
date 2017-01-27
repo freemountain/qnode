@@ -6,6 +6,9 @@ PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd . > /dev/null
 
+cd "$PROJECT_PATH"
+git submodule update --init --recursive
+
 mkdir -p "$PROJECT_PATH/build/tools/qbs"
 cd "$PROJECT_PATH/build/tools/qbs"
 qmake -r "$PROJECT_PATH/tools/qbs/qbs.pro"

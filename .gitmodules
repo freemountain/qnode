@@ -1,3 +1,7 @@
 [submodule "vendor/gel"]
 	path = vendor/gel
 	url = https://github.com/Cutehacks/gel
+
+[submodule "tools/qbs"]
+        path = tools/qbs
+        url = https://github.com/qt-labs/qbs
