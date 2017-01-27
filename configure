@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+set -o xtrace
+
+PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd . > /dev/null
+
+mkdir -p "$PROJECT_PATH/build/tools/qbs"
+cd "$PROJECT_PATH/build/tools/qbs"
+qmake -r "$PROJECT_PATH/tools/qbs/qbs.pro"
+make
+
+popd > /dev/null
