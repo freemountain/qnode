@@ -6,7 +6,6 @@ import qbs.ModUtils
 
 QNodeApplication {
   name: "QuarkGui"
-  //stype: ["application", "app_deps",]
 
 
   Depends { name: "Qt"; submodules: ["quick", "qml"] }
@@ -14,14 +13,16 @@ QNodeApplication {
   Depends { name: "cpp" }
   Depends { name: "node_path" }
 
-  Probes.NodeJsProbe {
-    id: nodejs
-  }
-
   Probes.NpmProbe {
     id: npm
   }
+
+  Probes.BinaryProbe {
+    id: nodejs
+    names: 'node'
+  }
   property string npmPath: npm.filePath
+  property string nodePath: nodejs.filePath
 
 
   Group {
@@ -30,34 +31,12 @@ QNodeApplication {
      qbs.install: true
      qbs.installDir: FileInfo.joinPaths(resourceDir, "default")
   }
-/*
-  Group {
-     name: "ounpm_pkgt"
-     fileTagsFilter: ["npm_pkg.node_path"]
-     qbs.install: true
-    // qbs.installSourceBase: product.destinationDirectory
-     qbs.installDir: FileInfo.joinPaths(FileInfo.path(bundle.executablePath), "../Frameworks")
-  }
-
 
   Group {
-     name: "node_path dist"
-     fileTags: ["node_path_dist"]
-     qbs.install: true
-     qbs.installDir: FileInfo.joinPaths(resourceDir, "node_path")
-  }
-
-  Group {
-     name: "node_path disf"
-     fileTags: ["node_path_files"]
-     qbs.install: true
-     qbs.installDir: FileInfo.joinPaths(resourceDir, "node_path_files")
-  }
-  */
-
-  Group {
+      // Probes dont work in QtCreator. The filePath prop is undefined.
+     condition: nodejs.filePath !== undefined
      name: "NodeJs Binary"
-     files: [nodejs.filePath]
+     files: [ nodejs.filePath === undefined ? "" : nodejs.filePath ]
      qbs.install: true
      qbs.installDir: binDir
   }

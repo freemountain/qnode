@@ -5,20 +5,7 @@ Project {
     minimumQbsVersion: "1.6"
     AutotestRunner { }
 
-    property stringList includePaths: [
-      sourceDirectory + '/src/libquark/cpp',
-      sourceDirectory + '/src/libqnode',
-      sourceDirectory + '/vendor',
-    ]
-
-
-    /*
-    property stringList libraryPaths: []
-
-    */
-
-
-
+    property stringList includePaths: []
 
     qbsSearchPaths: ["qbs"]
     references: [

@@ -1,22 +1,23 @@
 import "../imports/QNodeProduct.qbs" as QNodeProduct
 
 QNodeProduct {
- name: "cutehacks.gel"
+    name: "cutehacks.gel"
+    type: "staticlibrary"
 
+    Depends { name: "Qt"; submodules: ["qml"] }
 
- type: "staticlibrary"
- Depends { name: "cpp" }
+    Export {
+        Depends { name: "cpp" }
+        cpp.includePaths: './../../vendor/'
+    }
 
-
- Depends { name: "Qt"; submodules: ["qml"] }
-
- files: [
-    "../../vendor/gel/jsvalueiterator.h",
-    "../../vendor/gel/jsonlistmodel.h",
-    "../../vendor/gel/collection.h",
-    "../../vendor/gel/gel.h",
-    "../../vendor/gel/jsonlistmodel.cpp",
-    "../../vendor/gel/collection.cpp",
-    "../../vendor/gel/gel.cpp"
- ]
+    files: [
+        "../../vendor/gel/jsvalueiterator.h",
+        "../../vendor/gel/jsonlistmodel.h",
+        "../../vendor/gel/collection.h",
+        "../../vendor/gel/gel.h",
+        "../../vendor/gel/jsonlistmodel.cpp",
+        "../../vendor/gel/collection.cpp",
+        "../../vendor/gel/gel.cpp"
+    ]
 }

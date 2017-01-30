@@ -4,13 +4,13 @@
 #include <QObject>
 #include <QtDebug>
 
-//#include "quarkprocess.h"
-//#include "environment.h"
+#include "quarkprocess.h"
+#include "environment.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-/*
+
     Environment* env = new Environment(app.arguments());
     QuarkProcess* proc;
 
@@ -25,6 +25,6 @@ int main(int argc, char *argv[])
     } else {
         proc = env->startProcess(env->getScriptPath());
     }
-*/
+
     return app.exec();
 }

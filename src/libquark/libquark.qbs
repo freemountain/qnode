@@ -6,10 +6,15 @@ QNodeLibrary {
 Depends{ name: "cutehacks.gel"}
  Depends { name: "Qt"; submodules: ["qml", "quick"] }
 
+
+ Export {
+        Depends { name: "cpp" }
+        cpp.includePaths: './cpp'
+}
+
  files: [
     "qml.qrc",
 
-    //"cpp/main.cpp",
     "cpp/rootstore.cpp",
     "cpp/environment.cpp",
     "cpp/quarkprocess.cpp",

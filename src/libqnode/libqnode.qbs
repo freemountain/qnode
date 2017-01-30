@@ -5,6 +5,11 @@ QNodeLibrary {
 
  Depends { name: "Qt"; submodules: ["qml", "concurrent"] }
 
+ Export {
+        Depends { name: "cpp" }
+        cpp.includePaths: '.'
+}
+
  files: [
      "libqnode.qrc",
 

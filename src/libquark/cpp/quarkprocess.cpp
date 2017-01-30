@@ -19,7 +19,7 @@ QuarkProcess::QuarkProcess(QProcessEnvironment env, Logger *log,
   this->qmlEngine = new QQmlApplicationEngine(this);
   this->rootStore = new RootStore(this);
 
-  this->qmlEngine->addImportPath("qrc:/src/qml");
+  this->qmlEngine->addImportPath("qrc:/qml");
   com::cutehacks::gel::registerEngine(this->qmlEngine);
 
   this->proc.setReadChannel(QProcess::StandardOutput);
