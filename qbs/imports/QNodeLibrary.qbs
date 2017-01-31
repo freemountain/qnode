@@ -8,5 +8,7 @@ QNodeProduct {
 
     bundle.isBundle: project.frameworksBuild
 
-    cpp.sonamePrefix: "@rpath"
+    cpp.sonamePrefix: qbs.targetOS.contains("darwin")
+      ? "@rpath"
+      : undefined
 }

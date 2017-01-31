@@ -13,7 +13,7 @@ QNodeProduct {
   property bool isBundle: bundle.isBundle
 
   cpp.rpaths: {
-    if(!qbs.targetOS.contains("darwin")) return [ "$ORIGIN/../lib/" + project.app_target ];
+    if(!qbs.targetOS.contains("darwin")) return [ "$ORIGIN/../lib"];
 
     var libPrefix = bundle.isBundle ? "@executable_path/../Frameworks" :  "@executable_path/../lib"
 
