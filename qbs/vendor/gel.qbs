@@ -4,7 +4,7 @@ QNodeProduct {
     name: "cutehacks.gel"
     type: "staticlibrary"
 
-    Depends { name: "Qt"; submodules: ["qml"] }
+    Depends { name: "Qt"; submodules: ["qml", "quick"] }
 
     Export {
         Depends { name: "cpp" }

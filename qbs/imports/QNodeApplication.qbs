@@ -13,7 +13,7 @@ QNodeProduct {
   property bool isBundle: bundle.isBundle
 
   cpp.rpaths: {
-    if(!qbs.targetOS.contains("darwin")) return [ "$ORIGIN/../lib"];
+    if(!qbs.targetOS.contains("darwin")) return [ "$ORIGIN/lib"];
 
     var libPrefix = bundle.isBundle ? "@executable_path/../Frameworks" :  "@executable_path/../lib"
 
@@ -26,7 +26,7 @@ QNodeProduct {
     qbs.install: true
     qbs.installDir: bundle.isBundle
                     ? FileInfo.path(bundle.executablePath)
-                    : FileInfo.joinPaths(product.name, "bin")
+                    : product.name
   }
 
   /*
@@ -81,7 +81,7 @@ QNodeProduct {
       qbs.install: true
       qbs.installDir: bundle.isBundle
         ? FileInfo.joinPaths(FileInfo.path(bundle.executablePath))
-        : FileInfo.joinPaths(product.name, "bin")
+        : product.name //FileInfo.joinPaths(product.name, "bin")
   }
 
 

@@ -121,7 +121,7 @@ QString Environment::getBundledAppPath() {
     #elif __linux__
         QString binPath = QFileInfo( QCoreApplication::applicationFilePath() ).absolutePath();
 
-        result =  binPath + "/../resources/default/package.json";
+        result =  binPath + "/resources/default/package.json";
     #elif __APPLE__
         QString binPath = QFileInfo( QCoreApplication::applicationFilePath() ).absolutePath();
 
@@ -146,8 +146,8 @@ QProcessEnvironment Environment::getProcEnv() {
     #ifdef _WIN32
         nodePath = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath() + "/node_path";
     #elif __linux__
-        //nodePath = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath() + "/node_path";
-        nodePath = QDir( QCoreApplication::applicationFilePath() + "/../../resources/" ).absoluteFilePath("node_path");
+        nodePath = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath() + "/resources/node_path";
+        //nodePath = QDir( QCoreApplication::applicationFilePath() + "/../../resources/" ).absoluteFilePath("node_path");
 
     #elif __APPLE__
         nodePath = QDir( QCoreApplication::applicationFilePath() + "/../../Resources/" ).absoluteFilePath("node_path");
