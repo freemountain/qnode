@@ -20,10 +20,10 @@ Product {
 
   Group {
      name: "npm pgk resource"
-     fileTagsFilter: ["npm_pkg.node_path"]
+     fileTagsFilter: ["npm_pkg." + product.name]
      qbs.install: true
      qbs.installSourceBase: product.destinationDirectory
-     qbs.installDir: "node_path"
+     qbs.installDir: product.name
   }
 
   Rule {

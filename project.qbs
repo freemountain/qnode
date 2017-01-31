@@ -19,6 +19,7 @@ Project {
         "src/libquark/libquark.qbs",
 
         "src/node_path/node_path.qbs",
+        "examples/default/default.qbs",
 
         "test/tests.qbs"
     ]

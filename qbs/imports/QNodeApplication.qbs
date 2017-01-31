@@ -5,20 +5,12 @@ import qbs.ModUtils
 
 
 QNodeProduct {
-  type: ["application", "app_deps", "resource", "node_path_files", "node_path_dist", "bundle.resource"]
+  type: ["application", "app_deps", "resource", "node_path_files", "node_path_dist", "bundle.resource", "bundle.bin"]
 
   Depends { name: "cpp" }
   Depends { name: "bundle" }
   bundle.isBundle: qbs.targetOS.contains("darwin")
-  //property bool isBundle: true
-
-  property string resourceDir: bundle.isBundle
-    ? FileInfo.joinPaths(FileInfo.path(bundle.executablePath), "../Resources")
-    : FileInfo.joinPaths(name, "resource")
-
-  property string binDir: bundle.isBundle
-    ? FileInfo.path(bundle.executablePath)
-    : FileInfo.joinPaths(name, "bin")
+  property bool isBundle: bundle.isBundle
 
   cpp.rpaths: {
     if(!qbs.targetOS.contains("darwin")) return [ "$ORIGIN/../lib/" + project.app_target ];
@@ -84,12 +76,42 @@ QNodeProduct {
   }
 
 
+  Group {
+      fileTagsFilter: "bundle.bin"
+      qbs.install: true
+      qbs.installDir: bundle.isBundle
+        ? FileInfo.joinPaths(FileInfo.path(bundle.executablePath))
+        : FileInfo.joinPaths(product.name, "bin")
+  }
+
+
 Rule {
     inputsFromDependencies:["resource"]
-
+    inputs: ["resource"]
     Artifact {
         filePath: FileInfo.joinPaths(input.baseDir, input.fileName)
         fileTags: ["bundle.resource"]
+    }
+
+    prepare: {
+      var cmd = new JavaScriptCommand();
+
+      cmd.sourceCode = function() {
+        File.copy(input.filePath, output.filePath);
+      };
+      cmd.silent = true;
+
+      return [cmd];
+    }
+}
+
+Rule {
+    inputsFromDependencies:["extern_bin"]
+    inputs:["extern_bin"]
+
+    Artifact {
+        filePath: FileInfo.joinPaths(input.baseDir, input.fileName)
+        fileTags: ["bundle.bin"]
     }
 
     prepare: {
@@ -110,10 +132,12 @@ Rule {
 
     outputArtifacts: {
         var tags = ["app_deps"];
+        var filePath = product.isBundle
+          ? FileInfo.joinPaths(product.destinationDirectory, product.name + ".app/Contents/Frameworks", input.fileName)
+          : FileInfo.joinPaths(product.destinationDirectory, "lib", input.fileName)
 
         return [{
-            filePath: FileInfo.joinPaths(product.destinationDirectory, product.name + ".app/Contents/Frameworks",
-                                         input.fileName),
+            filePath: filePath,
             fileTags: tags
         }];
     }
