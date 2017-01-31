@@ -21,7 +21,7 @@ QNodeApplication {
 
   Group {
       // Probes dont work in QtCreator and only on osx. The filePath prop is undefined.
-     condition: nodejs.filePath !== undefined && qbs.targetOS.contains("darwin")
+     //condition: nodejs.filePath !== undefined && qbs.targetOS.contains("darwin")
      files: [ nodejs.filePath === undefined ? "" : nodejs.filePath ]
      fileTags: ["extern_bin"]
   }

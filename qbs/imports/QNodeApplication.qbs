@@ -110,7 +110,7 @@ Rule {
     inputs:["extern_bin"]
 
     Artifact {
-        filePath: FileInfo.joinPaths(input.baseDir, input.fileName)
+        filePath: input.fileName//FileInfo.joinPaths(input.baseDir, input.fileName)
         fileTags: ["bundle.bin"]
     }
 
