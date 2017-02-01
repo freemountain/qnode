@@ -10,6 +10,7 @@ Project {
     qbsSearchPaths: ["qbs"]
     references: [
         "qbs/vendor/gel.qbs",
+        "qbs/vendor/node.qbs",
 
         "src/qnode-cli/qnode-cli.qbs",
         "src/qnode-gui/qnode-gui.qbs",
