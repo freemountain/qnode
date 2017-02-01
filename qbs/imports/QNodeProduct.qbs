@@ -10,5 +10,7 @@ Product {
     cpp.minimumOsxVersion: "10.7"
     cpp.cxxLanguageVersion: "c++11"
 
+    cpp.defines: Qt.core.staticBuild ? ['STATIC_BUILD'] : ['SHARED_BUILD'] 
+
     Depends { name: "bundle" }
 }

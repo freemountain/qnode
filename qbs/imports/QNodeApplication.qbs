@@ -7,11 +7,40 @@ import qbs.ModUtils
 QNodeProduct {
   type: ["application", "app_deps", "resource", "node_path_files", "node_path_dist", "bundle.resource", "bundle.bin"]
 
+  Depends { name: "Qt"; submodules: ["qwindows"]; condition: qbs.targetOS.contains("windows")}
   Depends { name: "cpp" }
   Depends { name: "bundle" }
   bundle.isBundle: qbs.targetOS.contains("darwin")
   property bool isBundle: bundle.isBundle
+  property string qmlPath: FileInfo.joinPaths(Qt.core.pluginPath, '..', 'qml')
 
+  cpp.staticLibraries: {
+    var libs =  [
+      'Qt5PlatformSupport',
+      qmlPath + '/QtQuick.2/libqtquick2plugin.a',
+      qmlPath + '/QtQuick/Controls/libqtquickcontrolsplugin.a',
+      qmlPath + '/QtQuick/Layouts/libqquicklayoutsplugin.a',
+      qmlPath + '/QtQuick/Dialogs/libdialogplugin.a',
+      qmlPath + '/QtQuick/Window.2/libwindowplugin.a',
+      qmlPath + '/Qt/labs/folderlistmodel/libqmlfolderlistmodelplugin.a',
+      qmlPath + '/Qt/labs/settings/libqmlsettingsplugin.a',
+      qmlPath + '/QtQuick/Dialogs/Private/libdialogsprivateplugin.a',
+      qmlPath + '/QtQuick/Controls/libqtquickcontrolsplugin.a',
+      qmlPath + '/QtQuick/PrivateWidgets/libwidgetsplugin.a',
+      qmlPath + '/QtQuick/Controls.2/libqtquickcontrols2plugin.a',
+      qmlPath + '/QtQuick/Controls.2/Material/libqtquickcontrols2materialstyleplugin.a',
+      qmlPath + '/QtQuick/Dialogs/libdialogplugin.a',
+      qmlPath + '/QtQuick/Templates.2/libqtquicktemplates2plugin.a',
+      qmlPath + '/QtQuick.2/libqtquick2plugin.a',
+      qmlPath + '/QtQuick/Layouts/libqquicklayoutsplugin.a',
+      qmlPath + '/QtQuick/PrivateWidgets/libwidgetsplugin.a'
+    ];
+
+    if(qbs.targetOS.contains("windows"))
+      libs.push('qwindows');
+
+    return Qt.core.staticBuild ? libs : [];
+  }
   cpp.rpaths: {
     if(!qbs.targetOS.contains("darwin")) return [ "$ORIGIN/lib"];
 

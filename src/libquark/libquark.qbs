@@ -3,8 +3,8 @@ import qbs.base
 QNodeLibrary {
  name: "quark"
 
-Depends{ name: "cutehacks.gel"}
- Depends { name: "Qt"; submodules: ["qml", "quick"] }
+ Depends{ name: "cutehacks.gel"}
+ Depends { name: "Qt"; submodules: ["qml", "quick", 'core', "widgets", 'quickcontrols2'] }
 
 
  Export {

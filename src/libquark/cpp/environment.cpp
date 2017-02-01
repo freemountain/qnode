@@ -57,7 +57,7 @@ QString Environment::getSystemCommand(QString name) {
 QString Environment::getCommand(QString name) {
     QString cmd = NULL;
 
-    QString envCmd = this->env.value("QUARK_CMD_" + name.toUpper(), NULL);    
+    QString envCmd = this->env.value("QUARK_CMD_" + name.toUpper(), NULL);
     if(envCmd != NULL) cmd = QDir::fromNativeSeparators(envCmd);
 
     QString bundledCmd = this->getBundledCommand(name);
@@ -75,7 +75,7 @@ QString Environment::getCommand(QString name) {
     return info.isFile() && info.isExecutable() ? cmd : NULL;
 }
 
-QString Environment::getShellCommand(QString name) {    
+QString Environment::getShellCommand(QString name) {
     #if defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
         QProcess proc;
         QString cmd = "which " + name;
@@ -117,7 +117,7 @@ QString Environment::getBundledAppPath() {
     #ifdef _WIN32
     QString binPath = QFileInfo( QCoreApplication::applicationFilePath() ).absolutePath();
 
-    result =  binPath + "/default/package.json";
+    result =  binPath + "/resources/default/package.json";
     #elif __linux__
         QString binPath = QFileInfo( QCoreApplication::applicationFilePath() ).absolutePath();
 
@@ -144,7 +144,7 @@ QProcessEnvironment Environment::getProcEnv() {
     QString nodePath = NULL;
 
     #ifdef _WIN32
-        nodePath = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath() + "/node_path";
+        nodePath = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath() + "/resources/node_path";
     #elif __linux__
         nodePath = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath() + "/resources/node_path";
         //nodePath = QDir( QCoreApplication::applicationFilePath() + "/../../resources/" ).absoluteFilePath("node_path");

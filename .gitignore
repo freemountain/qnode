@@ -1,6 +1,7 @@
 build
 dist
 default
+node_modules
 /.qmake.cache
 /.qmake.stash
 *.pro.user

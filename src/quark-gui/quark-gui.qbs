@@ -8,6 +8,7 @@ QNodeApplication {
   name: "QuarkGui"
 
   Depends { name: "Qt"; submodules: ["quick", "qml"] }
+
   Depends { name: "quark" }
   Depends { name: "cpp" }
 
