@@ -3,7 +3,7 @@ set -e
 set -o xtrace
 
 PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
+OS="linux"
 pushd . > /dev/null
 
 cd "$PROJECT_PATH"
@@ -14,42 +14,15 @@ cd "$PROJECT_PATH/build/tools/qbs"
 qmake -r "$PROJECT_PATH/tools/qbs/qbs.pro"
 make
 
-
-if [ "$OS" = "linux" ]; then
-  BIN_PATH="$PROJECT_PATH/tmp/bin-$OS-$ARCH"
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  BIN_PATH="$PROJECT_PATH/build/tools/"
   mkdir -p "$BIN_PATH"
 
-  if [ ! -d "$PROJECT_PATH/tmp/linuxdeployqt-src" ] ; then
-      git clone "https://github.com/probonopd/linuxdeployqt" "$PROJECT_PATH/tmp/linuxdeployqt-src"
-  fi
-
-  if [ ! -d "$PROJECT_PATH/tmp/patchelf-src" ] ; then
-      git clone "https://github.com/NixOS/patchelf" "$PROJECT_PATH/tmp/patchelf-src"
-      cd "$PROJECT_PATH/tmp/patchelf-src/"
-      ./bootstrap.sh
-  fi
-
-  if [ ! -d "$PROJECT_PATH/tmp/linuxdeployqt-build" ] ; then
-      mkdir "$PROJECT_PATH/tmp/linuxdeployqt-build"
-      cd "$PROJECT_PATH/tmp/linuxdeployqt-build"
-      qmake "../linuxdeployqt-src"
-      make
-      cp "linuxdeployqt/linuxdeployqt" "$BIN_PATH/linuxdeployqt"
-  fi
-
-  if [ ! -d "$PROJECT_PATH/tmp/patchelf-build" ] ; then
-      mkdir "$PROJECT_PATH/tmp/patchelf-build"
-      cd "$PROJECT_PATH/tmp/patchelf-build"
-      "$PROJECT_PATH/tmp/patchelf-src/configure" --prefix="$PROJECT_PATH/tmp/patchelf-build"
-      make
-      make install
-      cp "$PROJECT_PATH/tmp/patchelf-build/bin/patchelf" "$BIN_PATH/patchelf"
-  fi
-
-  APPIMG_CMD="$BIN_PATH/appimagetool"
-  if [ ! -f "$APPIMG_CMD" ] ; then
-      curl -L -o "$APPIMG_CMD" "https://github.com/probonopd/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
-      chmod +x "$APPIMG_CMD"
+  if [ ! -f "$BIN_PATH/linuxdeployqt" ] ; then
+      cd "$BIN_PATH"
+      wget "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+      mv "linuxdeployqt-continuous-x86_64.AppImage" "linuxdeployqt"
+      chmod +x "linuxdeployqt"
   fi
 fi
 
