@@ -5,9 +5,7 @@
 [submodule "tools/qbs"]
         path = tools/qbs
         url = https://github.com/qt-labs/qbs
+
 [submodule "tools/linuxdeployqt"]
 	path = tools/linuxdeployqt
 	url = https://github.com/probonopd/linuxdeployqt
-[submodule "patchelf"]
-	path = patchelf
-	url = https://github.com/NixOS/patchelf
