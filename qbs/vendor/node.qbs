@@ -14,17 +14,12 @@ Product {
     id: wget
     names: 'wget'
   }
-  Probes.BinaryProbe {
-    id: curl
-    names: 'curl'
-  }
 
   Probes.BinaryProbe {
     id: tar
     names: 'tar'
   }
 
-  property string curlBin: curl.filePath
   property string wgetBin: wget.filePath
   property string tarBin: tar.filePath
 
